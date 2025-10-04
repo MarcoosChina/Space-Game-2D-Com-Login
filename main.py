@@ -12,6 +12,7 @@ from tkinter import messagebox
 import mysql.connector
 import random
 from random import randint
+from dotenv import load_dotenv
 #from pygame import key
 
 
@@ -53,7 +54,7 @@ def draw_texto(text, font, color, surface, x, y):
     surface.blit(textobj, textrect)
 #===================
 def menu():
-    con = mysql.connector.connect(host='localhost', database='sa', user='root', password='33305883@Mv')
+    con = mysql.connector.connect(host='localhost', database='sa', user='root', password=os.getenv('DATABASE_PASSWORD'))
     cursor = con.cursor()
     # funções
     def limitar_tamanho(p):
@@ -480,7 +481,7 @@ def game():
 
 #salve somente quando clicar em 'score' no menu principal após a gameplay
 def update_score():
-    con = mysql.connector.connect(host='localhost', database='sa', user='root', password='33305883@Mv')
+    con = mysql.connector.connect(host='localhost', database='sa', user='root', password=os.getenv('DATABASE_PASSWORD'))
     cursor = con.cursor()
     global pont
     cursor.execute('UPDATE jogadores SET pontuacao=0 WHERE pontuacao IS NULL')
@@ -516,5 +517,7 @@ def score():
                     run3 = False
 
 if __name__ == "__main__":
+    
+    load_dotenv()
     menu()
 
